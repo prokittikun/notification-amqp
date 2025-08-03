@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "strict": false,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@root/*": ["./*"],
+      "@applications/*": ["./applications/*"],
+      "@domains/*": ["./domains/*"],
+      "@infrastructures/*": ["./infrastructures/*"]
+    }
+  },
+  "include": ["src/**/*", "test"],
+  "exclude": ["node_modules", "dist", "migrations"]
+}
