@@ -13,5 +13,6 @@ import { InfrastructuresConfigDIToken } from "@applications/di/infrastructures/c
     provide: InfrastructuresConfigDIToken.EnvironmentService,
     useClass: EnvironmentsService,
   }],
+  exports: [InfrastructuresConfigDIToken.EnvironmentService],
 })
 export class EnvironmentsModule {}

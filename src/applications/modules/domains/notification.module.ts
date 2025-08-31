@@ -1,17 +1,11 @@
-import { Module } from "@nestjs/common";
+import { Module, Provider } from "@nestjs/common";
 import { EventEmitterModule } from "@nestjs/event-emitter";
-import { NotificationDIToken } from "@applications/di/domains/notification.di";
+import { NotificationConsumerService } from "@presenters/consumers/notification/notification.consumer.service";
+
+const presentersProvider: Provider[] = [NotificationConsumerService];
 
 @Module({
-  imports: [],
-  controllers: [
-    // NotificationInApplicationController
-  ],
-  providers: [
-    // {
-    //   provide: NotificationDIToken.NotificationService,
-    //   useClass: CreateInApplicationNotificationUseCase,
-    // },
-  ],
+  imports: [EventEmitterModule.forRoot()],
+  providers: [...presentersProvider],
 })
 export class NotificationModule {}

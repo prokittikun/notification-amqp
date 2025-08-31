@@ -10,4 +10,8 @@ export class EnvironmentsService implements IEnvironments {
     const _port = this.configService.get("PORT") || 5000;
     return Number(_port);
   }
+
+  get amqpURI(): string {
+    return this.configService.get("AMQP_URI");
+  }
 }
