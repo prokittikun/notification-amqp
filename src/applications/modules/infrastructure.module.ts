@@ -3,5 +3,6 @@ import { ConfigsModule } from '@applications/modules/infrastructures/configs.mod
 
 @Module({
     imports: [ConfigsModule],
+    exports: [ConfigsModule],
 })
 export class InfrastructureModule {}

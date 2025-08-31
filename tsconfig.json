@@ -8,10 +8,11 @@
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "paths": {
-      "@root/*": ["./*"],
       "@applications/*": ["./applications/*"],
       "@domains/*": ["./domains/*"],
-      "@infrastructures/*": ["./infrastructures/*"]
+      "@infrastructures/*": ["./infrastructures/*"],
+      "@presenters/*": ["./presenters/*"],
+      "@utils/*": ["./utils/*"]
     }
   },
   "include": ["src/**/*", "test"],

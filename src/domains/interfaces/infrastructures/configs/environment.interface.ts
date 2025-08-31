@@ -1,3 +1,4 @@
 export interface IEnvironments {
-    port: number;
+  port: number;
+  amqpURI: string;
 }
