@@ -54,6 +54,8 @@ export class MessageBrokerInstanceService
 
       console.log("Connected to RabbitMQ successfully");
 
+      this._retryConnection = 0;
+      this._isExceedConnectionError = false;
       this.messageBrokerEventEmitter.sendEventConnection(
         MessageBrokerEventEnum.Connected
       );

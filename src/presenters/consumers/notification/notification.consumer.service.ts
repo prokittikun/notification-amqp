@@ -1,22 +1,46 @@
+import { InfrastructuresAdapterDIToken } from "@applications/di/infrastructures/adapters";
+import { CreateEmailNotificationDto } from "@domains/constants/dtos/notifications.dto";
 import { MessageBrokerEventEnum } from "@domains/constants/enums/messageBroker.enum";
+import {
+  BrokerChannelParams,
+  BrokerMessageParams,
+} from "@domains/constants/types/messageBroker.type";
+import { IMessageBrokerServiceAdapter } from "@domains/interfaces/infrastructures/adapters/messageBroker.interface";
 import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
+import { ConsumerHandler, MessageBody } from "@presenters/consumers/decorator";
 
 @Injectable()
 export class NotificationConsumerService implements OnModuleInit {
-  private readonly emailNotificationQueueName: string = "notification:email";
+  private readonly emailNotificationQueueName: string =
+    "test:notification:email";
 
-  constructor() {}
+  constructor(
+    @Inject(InfrastructuresAdapterDIToken.MessageBrokerServiceAdapter)
+    private readonly messageBrokerServiceAdapter: IMessageBrokerServiceAdapter
+  ) {}
 
   onModuleInit() {
+    this.onInitialConsumeMessageBroker();
   }
 
   @OnEvent(MessageBrokerEventEnum.Connected, { async: true })
-  async onInitialConsumeMessageBroker(){
-
+  async onInitialConsumeMessageBroker() {
+    console.log("Initial consumers");
+    this.messageBrokerServiceAdapter.consumers(
+      this.emailNotificationQueueName,
+      this.handleEmailMessageConsumer.bind(this),
+      { noAck: false }
+    );
   }
-  
-  async handleEmailMessageConsumer(){
-    console.log("Email Notification Consumer is connected to the message broker.");
+
+  @ConsumerHandler({
+    isAck: true,
+  })
+  async handleEmailMessageConsumer(
+    @MessageBody(CreateEmailNotificationDto)
+    message: CreateEmailNotificationDto
+  ) {
+    console.log("Received email notification message:", message);
   }
 }
