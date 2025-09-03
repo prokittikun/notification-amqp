@@ -12,6 +12,8 @@ import {
   IsString,
   ValidateNested,
 } from "class-validator";
+import { BaseNotificationDto } from "./base.dto";
+import { EmailProviderEnum } from "../enums/emailProvider.enum";
 
 export class EmailPayloadDto {
   @IsString()
@@ -21,7 +23,11 @@ export class EmailPayloadDto {
   message: string;
 }
 
-export class CreateEmailNotificationDto {
+export class CreateEmailNotificationDto extends BaseNotificationDto {
+  @IsEnum(EmailProviderEnum)
+  @IsOptional()
+  keyEmailProvider?: EmailProviderEnum = EmailProviderEnum.MAILHOG;
+
   @IsEmail()
   senderEmail: string;
 

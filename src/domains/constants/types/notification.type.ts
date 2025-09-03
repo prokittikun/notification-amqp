@@ -1,4 +1,5 @@
 import { Nullable } from "@utils/commonTypes";
+import { EmailProviderEnum } from "../enums/emailProvider.enum";
 
 export type EmailBodyParams = {
   subject: string;
@@ -7,7 +8,7 @@ export type EmailBodyParams = {
 };
 
 export type CreateEmailNotificationParams = {
-  keyEmailProvider: string;
+  keyEmailProvider: EmailProviderEnum;
   senderEmail: string;
   senderName: string;
   receiverEmails: string[];
