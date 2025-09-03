@@ -29,7 +29,7 @@ export class MessageBrokerAdapterService
     await this.brokerMessageInstance.channel.assertQueue(queueName, {
       durable: true,
     });
-    await this.brokerMessageInstance.channel.prefetch(1);
+    await this.brokerMessageInstance.channel.prefetch(10);
     await this.brokerMessageInstance.channel.consume(
       queueName,
       async (message) => callback(message, this.brokerMessageInstance.channel),

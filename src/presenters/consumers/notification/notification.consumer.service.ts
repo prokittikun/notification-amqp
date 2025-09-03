@@ -1,3 +1,4 @@
+import { NotificationDIToken } from "@applications/di/domains/notification.di";
 import { InfrastructuresAdapterDIToken } from "@applications/di/infrastructures/adapters";
 import { CreateEmailNotificationDto } from "@domains/constants/dtos/notifications.dto";
 import { MessageBrokerEventEnum } from "@domains/constants/enums/messageBroker.enum";
@@ -6,6 +7,7 @@ import {
   BrokerMessageParams,
 } from "@domains/constants/types/messageBroker.type";
 import { IMessageBrokerServiceAdapter } from "@domains/interfaces/infrastructures/adapters/messageBroker.interface";
+import { ICreateEmailNotificationUseCase } from "@domains/interfaces/usecases/createEmailNotification.interface";
 import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
 import { OnEvent } from "@nestjs/event-emitter";
 import { ConsumerHandler, MessageBody } from "@presenters/consumers/decorator";
@@ -17,7 +19,9 @@ export class NotificationConsumerService implements OnModuleInit {
 
   constructor(
     @Inject(InfrastructuresAdapterDIToken.MessageBrokerServiceAdapter)
-    private readonly messageBrokerServiceAdapter: IMessageBrokerServiceAdapter
+    private readonly messageBrokerServiceAdapter: IMessageBrokerServiceAdapter,
+    @Inject(NotificationDIToken.CreateEmailNotificationUseCase)
+    private readonly createEmailNotificationUseCase: ICreateEmailNotificationUseCase
   ) {}
 
   onModuleInit() {
@@ -41,6 +45,7 @@ export class NotificationConsumerService implements OnModuleInit {
     @MessageBody(CreateEmailNotificationDto)
     message: CreateEmailNotificationDto
   ) {
-    console.log("Received email notification message:", message);
+    const createEmailNotificationParams = message.toJson();
+    await this.createEmailNotificationUseCase.execute(createEmailNotificationParams);
   }
 }
