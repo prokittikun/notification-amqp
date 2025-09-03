@@ -12,6 +12,8 @@ import {
   IsString,
   ValidateNested,
 } from "class-validator";
+import { BaseDto } from "./base.dto";
+import { CreateEmailNotificationParams } from "@domains/constants/types/notification.type";
 
 export class EmailPayloadDto {
   @IsString()
@@ -21,7 +23,7 @@ export class EmailPayloadDto {
   message: string;
 }
 
-export class CreateEmailNotificationDto {
+export class CreateEmailNotificationDto extends BaseDto<CreateEmailNotificationParams> {
   @IsEmail()
   senderEmail: string;
 
@@ -37,6 +39,6 @@ export class CreateEmailNotificationDto {
   payload: EmailPayloadDto;
 
   @IsDate()
-  @Transform((params) => (params.value ? dayjs(params.value).toDate() : null)) 
+  @Transform((params) => (params.value ? dayjs(params.value).toDate() : null))
   sendAt: Nullable<Date>;
 }

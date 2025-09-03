@@ -3,7 +3,7 @@ import { MessageBrokerModule } from "@applications/modules/infrastructures/confi
 import { InfrastructuresAdapterDIToken } from "@applications/di/infrastructures/adapters";
 import { InfrastructuresConfigDIToken } from "@applications/di/infrastructures/configs";
 import { IMessageBrokerInstance } from "@domains/interfaces/infrastructures/configs/messageBroker.interface";
-import { MessageBrokerAdapterService } from "@infrastructures/adapters/mesaageBroker/messageBrokerAdaptor.service";
+import { MessageBrokerAdapterService } from "@infrastructures/adapters/mesaageBroker/messageBrokerAdapter.service";
 
 @Module({
   imports: [MessageBrokerModule],
